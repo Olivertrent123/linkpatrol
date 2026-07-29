@@ -9,6 +9,8 @@ export default function Home() {
   const [success, setSuccess] = useState(false);
   const [hoveredBtn, setHoveredBtn] = useState("");
 
+  const PAYSTACK_LINK = "https://paystack.shop/pay/9wj0qo7lsm";
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -254,11 +256,12 @@ export default function Home() {
                 cta: "Start for Free",
                 ctaId: "starter-cta",
                 highlight: false,
+                ctaAction: () => scrollTo("signup"),
               },
               {
                 plan: "Pro",
                 badge: "Most Popular",
-                price: "$29",
+                price: "$19",
                 period: "per month — cancel anytime",
                 desc: "Built for growing businesses, agencies, and teams managing multiple websites.",
                 features: [
@@ -267,9 +270,10 @@ export default function Home() {
                   "Email and Slack alerts",
                   "Unlimited links per scan",
                 ],
-                cta: "Start 14-Day Free Trial",
+                cta: "Start Pro — $19/month",
                 ctaId: "pro-cta",
                 highlight: true,
+                ctaAction: () => window.open(PAYSTACK_LINK, "_blank"),
               },
             ].map((p) => (
               <div key={p.plan} style={{ background: p.highlight ? "#16a34a" : "#fff", border: `1.5px solid ${p.highlight ? "#16a34a" : "#e5e7eb"}`, borderRadius: "14px", padding: "36px", position: "relative" }}>
@@ -291,7 +295,7 @@ export default function Home() {
                   ))}
                 </div>
                 <button
-                  onClick={() => scrollTo("signup")}
+                  onClick={p.ctaAction}
                   style={{ width: "100%", padding: "13px", borderRadius: "8px", background: hoveredBtn === p.ctaId ? (p.highlight ? "#f0fdf4" : "#15803d") : (p.highlight ? "#fff" : "#16a34a"), color: p.highlight ? "#16a34a" : "#fff", fontSize: "14px", fontWeight: 700, border: "none", cursor: "pointer", transition: "all 0.2s" }}
                   onMouseEnter={() => setHoveredBtn(p.ctaId)}
                   onMouseLeave={() => setHoveredBtn("")}
